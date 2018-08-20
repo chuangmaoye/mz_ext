@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			mztools
+		</title>
+		
+		<link rel="stylesheet" type="text/css" href="popup.css" />
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+	</head>
+	<style>
+	 #input_header tr td,#input_val tr td{width:150px; overflow:hidden;}
+	 #input_header,#input_val{ width:80%;}
+	 #input_header{display:none;}
+	</style>
+<body style="width:800px;">
+<div class="container-fluid" >
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist" id="myTabs">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">转码</a></li>
+   <!--  <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">正则生成</a></li>-->
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Request</a></li>
+    <!--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">二维码生成/解析</a></li> -->
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+  <!-- 编码转换 -->
+    <div role="tabpanel" class="tab-pane active" id="home">
+	   <div class="form-group">
+		<label for="exampleInputEmail1">明文</label>
+		<input type="text" class="form-control" id="code" placeholder="输入待转">
+	  </div>
+	  <div class="form-group">
+		<button type="button" class="btn btn-primary" id='btn_code'>编码</button>
+		<button type="button" class="btn btn-success" id='btn_decode'>解码</button>
+		
+		<div class="radio">
+		  <label>
+			<input type="radio" name="type" id="optionsRadios1" value="1" checked>
+			url转码
+		  </label>
+		</div>
+		<div class="radio">
+		  <label>
+			<input type="radio" name="type" id="optionsRadios2" value="2">
+			 Unicode转换
+		  </label>
+		</div>
+		<div class="radio">
+		  <label>
+			<input type="radio" name="type" id="optionsRadios1" value="3" >
+			BASE64转码
+		  </label>
+		</div>
+		<div class="radio">
+		  <label>
+			<input type="radio" name="type" id="optionsRadios2" value="4">
+			 MD5加密
+		  </label>
+		</div>
+	  </div>
+	  <div class="form-group">
+		<label for="exampleInputPassword1">生成结果</label>
+		<input type="text" class="form-control" id="sendcode" placeholder="编码结果">
+	  </div>
+	</div>
+	<!-- 正则匹配 -->
+    <div role="tabpanel" class="tab-pane" id="profile">
+	 <!-- <div class="form-group">
+		<label for="exampleInputEmail1">输入url/url编码</label>
+		<input type="text" class="form-control" id="regexcode" placeholder="输入待转">
+	  </div>
+	  <div class="form-group">
+		<button type="button" class="btn btn-primary" id='btn_regexcode'>编码</button>
+		<button type="button" class="btn btn-success" id='btn_sendregexcode'>解码</button>
+		
+
+	  </div>
+	  <div class="form-group">
+		<label for="exampleInputPassword1">生成结果</label>
+		<input type="text" class="form-control" id="sendregexcode" placeholder="编码结果">
+	  </div> -->
+	  
+	
+	</div>
+    <div role="tabpanel" class="tab-pane" id="messages">
+	  <div class="form-group">
+		<label for="exampleInputEmail1">接口地址</label>
+		<input type="text" class="form-control" id="intefaceurl" placeholder="接口地址http|https">
+	  </div>
+	  <div class="form-group">
+		<button type="button" class="btn btn-primary" id='btn_send'>发送</button>
+		<div class="radio">
+		  <label>
+			<input type="radio" name="requetype"  value="1" checked>
+			 GET
+		  </label>
+		</div>
+		<div class="radio">
+		  <label>
+			<input type="radio" name="requetype"  value="2">
+			 POST
+		  </label>
+		</div>
+		<div class="radio">
+		  <label>
+			<input type="radio" name="requetype"  value="3" >
+			PUT
+		  </label>
+		</div>
+		<div class="radio">
+		  <label>
+			<input type="radio" name="requetype" value="4">
+			 DELETE
+		  </label>
+		</div>
+	  </div>
+	  <hr/>
+	  <div>
+		 <div class="checkbox">
+		  <label>
+			<input type="checkbox" name='header' value="">
+			headers(头部自定义)
+		  </label>
+		</div>
+		<table class="table table-bordered " id='input_header' type='table'>
+		  <tr>
+			<th>key(键)</th>
+		    <th>val(值)</th>
+		  </tr>
+		  <tr>
+			<td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+	  </div>
+	  <div style='display:none;'>
+	     <div class="radio-inline">
+			  <label>
+				<input type="radio" name="postdata"  value="1" checked>
+				键/值
+			  </label>
+			</div>
+			<div class="radio-inline">
+			  <label>
+				<input type="radio" name="postdata"  value="2" >
+				自定义
+			  </label>
+			</div>
+	     <table class="table table-bordered " id='input_val' type='table'>
+		  <tr>
+			<th>key(键)</th>
+		    <th>val(值)</th>
+		  </tr>
+		  <tr>
+			<td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+		<textarea class="form-control" id="post_data" placeholder="自定义参数" style='height:100px;display:none;' type='text'></textarea>
+	  </div>
+	  <div class="form-group">
+		<label for="exampleInputPassword1">
+			返回值 
+		
+			<div class="radio-inline">
+			  <label>
+				<input type="radio" name="datatype"  value="1" checked>
+				text
+			  </label>
+			</div>
+			<div class="radio-inline">
+			  <label>
+				<input type="radio" name="datatype"  value="2" >
+				json
+			  </label>
+			</div>
+			<!--<div class="radio-inline">
+			  <label>
+				<input type="radio" name="datatype"  value="2" >
+				xml
+			  </label>
+			</div>-->
+		</label>
+		
+		<textarea class="form-control" id="recv_data" placeholder="返回结果" style='height:200px;' type='text'></textarea>
+	  </div>
+	</div>
+    <div role="tabpanel" class="tab-pane" id="settings">
+	    <div class="form-group">
+		<label for="exampleInputEmail1">接口地址</label>
+		<input type='file' id='file'/>
+		<canvas id="myCanvas" width="500"height="300"></canvas>
+	  </div>
+	    
+	</div>
+  </div>
+
+</div>
+</body>
+<script type="text/javascript" src="jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="bootstrap.min.js"></script>
+<script src="popup.js"></script>
+</html>

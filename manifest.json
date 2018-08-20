@@ -1,0 +1,24 @@
+﻿{
+    
+	"manifest_version": 2,
+	"name": "mzweb接口调试工具",
+	"version": "0.0.2",
+	"background": { "scripts": ["jquery-2.0.0.min.js", "background.js"] },
+	
+	"browser_action": {
+		"default_icon": {
+			"19": "cnblogs_19.png",
+			"38": "cnblogs_38.png"
+		},
+		"default_title": "mzweb接口调试工具", 
+		"default_popup": "popup.html"
+	},
+	"permissions" : ["tabs","*://*/*","webRequest","storage"],
+	"icons": {
+		"16": "cnblogs_19.png"
+	},
+	"content_scripts":[{
+		"matches":["*://*/*"],
+		"js":["jquery-2.0.0.min.js", "content_script.js"]
+	}]
+}
